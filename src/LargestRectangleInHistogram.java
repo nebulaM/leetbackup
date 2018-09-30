@@ -20,7 +20,7 @@ import java.util.Stack;
  * Output: 10                Output: 6
  *
  */
-class Solution {
+public class LargestRectangleInHistogram {
     public static int largestRectangleArea(int[] heights) {
         int maxArea = 0;
         Stack<Integer> st = new Stack<Integer>();
@@ -65,9 +65,7 @@ class Solution {
             System.out.println("currMax " + currMax + " idxCurr " + idxCurr + " heights[idxCurr] " + heights[idxCurr] + " i " + i + " st.peek() " + st.peek());*/
         return Math.max(currMax, heights[idxCurr] * (st.isEmpty()? idx : idx - 1 - st.peek()));
     }
-}
 
-public class LargestRectangleInHistogram {
     public static int[] stringToIntegerArray(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
@@ -96,7 +94,7 @@ public class LargestRectangleInHistogram {
 
                 int[] heights = stringToIntegerArray(line);
 
-                int ret = new Solution().largestRectangleArea(heights);
+                int ret = largestRectangleArea(heights);
 
                 String out = String.valueOf(ret);
 
