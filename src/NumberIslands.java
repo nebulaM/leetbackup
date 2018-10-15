@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  *
  * 200. Number of Islands [DFS, recursion]
@@ -27,8 +29,10 @@
 
 public class NumberIslands {
     public static int numIslands(char[][] grid) {
-        // Deep copy grid so the original grid will not be modified
-        char[][] map = grid.clone();
+        // Deep copy grid so the original grid will not be changed
+        char[][] map = new char[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; ++i)
+            map[i] = Arrays.copyOf(grid[i], grid[0].length);
         int count = 0;
 
         for (int i = 0; i < map.length; ++i)
