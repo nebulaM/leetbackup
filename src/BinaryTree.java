@@ -54,8 +54,48 @@ public class BinaryTree {
         _rightSideView(root.right, soln, level + 1);
         _rightSideView(root.left, soln, level + 1);
     }
-    
-    
+
+    /**
+     * 230. Kth Smallest Element in a BST
+     *
+     * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+     *
+     * Example:
+     *
+     * Input: root = [3,1,4,null,2], k = 1
+     * Output: 1
+     * Input: root = [5,3,6,2,4,null,null,1], k = 3
+     * Output: 3
+     *
+     * @param root - Root of the given tree.
+     * @param k - A number.
+     * @return kthSmallest - kth smallest element in the tree.
+     */
+    private static int kthSmallestRet;
+    private static int kthSmallestCount;
+    public static int kthSmallest(TreeNode root, int k) {
+        kthSmallestRet = 0;
+        kthSmallestCount = k;
+        _kthSmallest(root);
+        return kthSmallestRet;
+    }
+
+    private static void _kthSmallest(TreeNode root)
+    {
+        if (null == root)
+            return;
+        _kthSmallest(root.left);
+
+        kthSmallestCount -= 1;
+        if (0 == kthSmallestCount)
+        {
+            kthSmallestRet = root.val;
+            return;
+        }
+
+        _kthSmallest(root.right);
+    }
+
     public static TreeNode stringToTreeNode(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
@@ -121,13 +161,31 @@ public class BinaryTree {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         while ((line = in.readLine()) != null) {
-            TreeNode root = stringToTreeNode(line);
+            String[] lines = line.split(" ",2);
+            int testCode = Integer.parseInt(lines[0]);
 
-            List<Integer> ret = rightSideView(root);
-
-            String out = integerArrayListToString(ret);
-
-            System.out.print(out);
+            String out;
+            switch (testCode)
+            {
+                case 199: { // Input: "199 [array of tree]"
+                    TreeNode root = stringToTreeNode(lines[1]);
+                    List<Integer> ret = rightSideView(root);
+                    out = integerArrayListToString(ret);
+                    break;
+                }
+                case 230: { // Input: "230 [array of tree] k"
+                    String[] inputs = lines[1].split(" ", 2);
+                    TreeNode root = stringToTreeNode(inputs[0]);
+                    int ret = kthSmallest(root, Integer.parseInt(inputs[1]));
+                    out = Integer.toString(ret);
+                    break;
+                }
+                default: {
+                    out = "Invalid input";
+                    break;
+                }
+            }
+            System.out.println(out);
         }
     }
 }
